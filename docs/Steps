@@ -1,0 +1,55 @@
+1. WebApp.Server Dependencies remove WebApp.Client
+2. WebApp.Server Properties launchSettings.json update applicationUrl(ports) to "https://localhost:5005;http://localhost:5004",
+3. WebApp.Client Implement CustomAddressAuthorizationMessageHandler : AuthorizationMessageHandler & Add ConfigureHandler(authorizedUrls: new[] {"https://localhost:5005"});
+4. WebApp.Client Register builder.Services.AddScoped<CustomAuthorizationMessageHandler>(); change AddHttpClient client.BaseAddress to  https://localhost:5005 & BaseAddressAuthorizationMessageHandler to CustomAddressAuthorizationMessageHandler in Program.cs
+5. WebApp.Client configure AddApiAuthorization Options: 
+	options.AuthenticationPaths.RemoteRegisterPath = "Https://localhost:5005/Identity/Account/Register";
+    options.AuthenticationPaths.RemoteProfilePath = "Https://localhost:5005/Identity/Account/Manage";
+	options.ProviderOptions.ConfigurationEndpoint = "https://localhost:5005/_configuration/WebApp.Client";
+6. WebApp.Client implement CustomRemoteAuthenticatorView to handle Register/Profile redirections
+7. WebApp.Server appsettings.json IdentityServer configuration change Profile to SPA, Add RedirectUri & LogoutUri pointing to WebApp.Client
+8. WebApp.Server configure CORS & Place app.UseCors("CorsPolicy"); before app.UseIdentityServer();
+
+gRPC
+1. WebApp.Shared install packages
+	Grpc.Net.Client
+	protobuf-net.Grpc
+2. WebApp.Shared Add Code-first Proto models
+3. WebApp.Server Implement WeatherService : IWeatherService
+4. WebApp.Server install packages
+	protobuf-net.Grpc.AspNetCore
+	Grpc.AspNetCore.Web
+4. WebApp.Server configure services
+	services.AddCodeFirstGrpc();
+	app.UseGrpcWeb(new GrpcWebOptions(){DefaultEnabled = true});
+	endpoints.MapGrpcService<WeatherService>();
+7. WebApp.Server configure CORS
+	services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .WithOrigins("https://localhost:5001", "http://localhost:5000")
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
+            }));
+
+    app.UseCors("CorsPolicy"); (Placed before app.UseIdentityServer();)
+    endpoints.MapGrpcService<WeatherService>().RequireCors("CorsPolicy");
+
+8. WebApp.Client install packages
+	Grpc.Net.Client.Web
+9. WebApp.Client configure GrpcWebHandler
+	.AddHttpMessageHandler(() => new GrpcWebHandler(GrpcWebMode.GrpcWeb));
+
+10. WebApp.Client register IWeatherService Singleton
+	builder.Services.AddSingleton(services =>
+            {
+                var httpClient = services.GetRequiredService<IHttpClientFactory>().CreateClient("WebApp.ServerAPI");
+                var channel = GrpcChannel.ForAddress(httpClient.BaseAddress,
+                    new GrpcChannelOptions {HttpClient = httpClient});
+                return channel.CreateGrpcService<IWeatherService>();
+            });
+
+11. Update FetchData.razor
+	
