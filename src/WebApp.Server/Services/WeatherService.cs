@@ -15,7 +15,7 @@ namespace WebApp.Server.Services
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        public Task<WeatherReply> GetWeather(WeatherRequest request, CallContext context)
+        public Task<WeatherReply> GetWeather(CallContext context)
         {
             var reply = new WeatherReply();
             var rng = new Random();

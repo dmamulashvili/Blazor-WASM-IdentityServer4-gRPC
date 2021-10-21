@@ -45,7 +45,7 @@ else
     {
         try
         {
-            forecasts = (await _weatherService.GetWeather(new WeatherRequest())).Forecasts;
+            forecasts = (await _weatherService.GetWeather()).Forecasts;
         }
         catch (AccessTokenNotAvailableException exception)
         {

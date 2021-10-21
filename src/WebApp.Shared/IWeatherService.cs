@@ -8,7 +8,6 @@ namespace WebApp.Shared
     public interface IWeatherService
     {
         [Operation]
-        Task<WeatherReply> GetWeather(WeatherRequest request,
-            CallContext context = default);
+        Task<WeatherReply> GetWeather(CallContext context = default);
     }
 }
