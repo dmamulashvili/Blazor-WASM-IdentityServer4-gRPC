@@ -2,15 +2,13 @@
 
 A Step-by-Step Guide on how to configure Blazor WebAssembly standalone app & ASP.NET Core Identity combined with IdentityServer4 server app using gRPC-Web(Code-first) middleware.    
 
-## Source projects Startup & default Credentials
+## Source projects Startup
 ```console
 dotnet run --project src/WebApp.Server/WebApp.Server.csproj
 ```
 ```console
 dotnet run --project src/WebApp.Client/WebApp.Client.csproj
 ```
-- Email: `alice@alice` or `bob@bob`
-- Password: `Pass123$`
 
 ## Create a new Blazor WebAssembly project
 ```console
