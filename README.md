@@ -3,14 +3,19 @@
 A Step-by-Step Guide on how to configure Blazor WebAssembly standalone app & ASP.NET Core Identity combined with IdentityServer4 server app using gRPC-Web(Code-first) middleware.    
 
 ## Source projects Startup & default Credentials
-`dotnet run --project src/WebApp.Server/WebApp.Server.csproj`
-
-`dotnet run --project src/WebApp.Client/WebApp.Client.csproj`
+```console
+dotnet run --project src/WebApp.Server/WebApp.Server.csproj
+```
+```console
+dotnet run --project src/WebApp.Client/WebApp.Client.csproj
+```
 - Email: `alice@alice` or `bob@bob`
 - Password: `Pass123$`
 
 ## Create a new Blazor WebAssembly project
-`dotnet new blazorwasm -au Individual -ho -o WebApp`
+```console
+dotnet new blazorwasm -au Individual -ho -o WebApp
+```
 
 ## WebApp.Shared project Configuration
 - Add a [Grpc.Net.Client](https://www.nuget.org/packages/Grpc.Net.Client) package reference
@@ -253,7 +258,7 @@ namespace WebApp.Client
     }
 }
 ```
-- Implement `CustomRemoteAuthenticatorView : RemoteAuthenticatorViewCore<RemoteAuthenticationState>` to workaround [RemoteRegisterPath & RemoteProfilePath Issue](https://github.com/dotnet/aspnetcore/issues/29246)
+- Implement `CustomRemoteAuthenticatorView : RemoteAuthenticatorViewCore<RemoteAuthenticationState>` to avoid [RemoteRegisterPath & RemoteProfilePath Issue](https://github.com/dotnet/aspnetcore/issues/29246)
 ```cs
 using System;
 using System.Threading.Tasks;
