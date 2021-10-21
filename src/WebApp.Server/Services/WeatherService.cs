@@ -1,11 +1,13 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using ProtoBuf.Grpc;
 using WebApp.Shared;
 
 namespace WebApp.Server.Services
 {
+    [Authorize]
     public class WeatherService : IWeatherService
     {
         private static readonly string[] Summaries = new[]
