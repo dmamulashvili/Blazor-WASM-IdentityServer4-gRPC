@@ -258,7 +258,7 @@ namespace WebApp.Client
     }
 }
 ```
-- Implement `CustomRemoteAuthenticatorView : RemoteAuthenticatorViewCore<RemoteAuthenticationState>` to workaround [RemoteRegisterPath & RemoteProfilePath Issue](https://github.com/dotnet/aspnetcore/issues/29246)
+- Implement `CustomRemoteAuthenticatorView : RemoteAuthenticatorViewCore<RemoteAuthenticationState>` to avoid [RemoteRegisterPath & RemoteProfilePath Issue](https://github.com/dotnet/aspnetcore/issues/29246)
 ```cs
 using System;
 using System.Threading.Tasks;
