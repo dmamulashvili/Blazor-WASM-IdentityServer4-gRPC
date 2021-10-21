@@ -37,10 +37,7 @@ namespace WebApp.Server
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer(options =>
-                {
-                    options.Discovery.CustomEntries.Add("registration_endpoint", "~/Identity/Account/Register");
-                })
+            services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
