@@ -1,8 +1,11 @@
 @page "/authentication/{action}"
 @using WebApp.Client.Authentication
-<CustomRemoteAuthenticatorView Action="@Action" />
+@* <RemoteAuthenticatorView Action="@Action" /> *@
+<CustomRemoteAuthenticatorView Action="@Action"/>
 
 @code{
-    [Parameter] public string Action { get; set; }
-}
 
+    [Parameter]
+    public string Action { get; set; }
+
+}

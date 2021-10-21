@@ -8,7 +8,9 @@ namespace WebApp.Client.Authentication
         public CustomAuthorizationMessageHandler(IAccessTokenProvider provider, NavigationManager navigation) : base(
             provider, navigation)
         {
-            ConfigureHandler(authorizedUrls: new[] {"https://localhost:5005"});
+            // Configures this handler to authorize outbound HTTP requests using an access token.
+            // authorizedUrls – The base addresses of endpoint URLs to which the token will be attached
+            ConfigureHandler(authorizedUrls: new[] {"https://localhost:5005"}); // WebApp.Server Url
         }
     }
 }

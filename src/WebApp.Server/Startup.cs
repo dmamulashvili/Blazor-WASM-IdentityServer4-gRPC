@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
 using ProtoBuf.Grpc.Server;
 using WebApp.Server.Data;
 using WebApp.Server.Models;
@@ -45,18 +42,19 @@ namespace WebApp.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            
+
+            services.AddCodeFirstGrpc();
+
             services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
             {
                 builder
+                    // WebApp.Client ApplicationUrls
                     .WithOrigins("https://localhost:5001", "http://localhost:5000")
                     .AllowAnyHeader()
-                    .AllowCredentials()
                     .AllowAnyMethod()
+                    // To allow a browser app to make cross-origin gRPC-Web calls
                     .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
             }));
-            
-            services.AddCodeFirstGrpc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,16 +79,19 @@ namespace WebApp.Server
 
             app.UseRouting();
 
+            // Should be placed before app.UseIdentityServer();
             app.UseCors("CorsPolicy");
 
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // new GrpcWebOptions() {DefaultEnabled = true} configures so all services support gRPC-Web by default
             app.UseGrpcWeb(new GrpcWebOptions() {DefaultEnabled = true});
 
             app.UseEndpoints(endpoints =>
             {
+                // Adds the code-first service endpoint
                 endpoints.MapGrpcService<WeatherService>();
 
                 endpoints.MapRazorPages();

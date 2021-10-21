@@ -12,11 +12,7 @@ namespace WebApp.Client.Authentication
         [Inject] internal IJSRuntime JS { get; set; }
         [Inject] internal NavigationManager Navigation { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="RemoteAuthenticatorView"/>.
-        /// </summary>
         public CustomRemoteAuthenticatorView() => AuthenticationState = new RemoteAuthenticationState();
-
 
         protected override async Task OnParametersSetAsync()
         {
