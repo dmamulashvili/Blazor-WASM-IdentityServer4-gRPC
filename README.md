@@ -4,14 +4,6 @@ A Step-by-Step Guide on how to configure Blazor WebAssembly standalone app & ASP
 
 ![Blazor-WASM-IdentityServer4-gRPC](Blazor-WASM-IdentityServer4-gRPC.png)
 
-## Source projects Startup
-```console
-dotnet run --project src/WebApp.Server/WebApp.Server.csproj
-```
-```console
-dotnet run --project src/WebApp.Client/WebApp.Client.csproj
-```
-
 ## Create a new Blazor WebAssembly project
 ```console
 dotnet new blazorwasm -au Individual -ho -o WebApp
@@ -388,4 +380,11 @@ namespace WebApp.Client.Authentication
     }
 
 }
+```
+## Run source projects
+```console
+dotnet run --project src/WebApp.Server/WebApp.Server.csproj
+```
+```console
+dotnet run --project src/WebApp.Client/WebApp.Client.csproj
 ```
