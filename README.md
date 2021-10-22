@@ -381,6 +381,7 @@ namespace WebApp.Client.Authentication
 
 }
 ```
+> Add Scaffolded Identity if you want to customize Login/Register/Profile pages
 ## Run source projects
 ```console
 dotnet run --project src/WebApp.Server/WebApp.Server.csproj
