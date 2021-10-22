@@ -2,6 +2,8 @@
 
 A Step-by-Step Guide on how to configure Blazor WebAssembly standalone app & ASP.NET Core Identity combined with IdentityServer4 server app using gRPC-Web(Code-first) middleware.    
 
+![Blazor-WASM-IdentityServer4-gRPC](Blazor-WASM-IdentityServer4-gRPC.png)
+
 ## Source projects Startup
 ```console
 dotnet run --project src/WebApp.Server/WebApp.Server.csproj
